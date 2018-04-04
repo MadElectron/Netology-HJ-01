@@ -31,5 +31,24 @@
       </div>
     </div>
   </section>
+  <script>
+
+    const images = [
+      'airmax-jump.png',
+      'airmax-on-foot.png',
+      'airmax-playground.png',
+      'airmax.png',
+      'airmax-top-view.png'
+    ];
+    const slider = document.getElementById('slider');
+    let index = 0;
+
+    slider.src = `i/${images[0]}`;
+
+    setInterval(() => { 
+      slider.src = `i/${images[++index % images.length]}` 
+    }, 5000);
+
+  </script>
 </body>
 </html>
