@@ -33,3 +33,6 @@ document.addEventListener('keyup', event => {
   }
 });
 
+const menu = document.getElementById('menu');
+const buttons = document.getElementsByTagName('buttons');
+const items = document.getElementsByClassName('items');
