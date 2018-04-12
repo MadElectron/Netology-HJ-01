@@ -20,10 +20,20 @@ function mp3Path(title) {
 
 player.src = mp3Path(tracks[0]);
 
-controls.playstate.onclick = () => player.paused ? player.play() : player.pause();
+controls.playstate.onclick = () => {
+  if (player.paused) {
+    player.play();
+    playerWrapper.classList.add('play');
+  } else {
+    player.pause();
+    // playerWrapper.classList.remove('play');
+  }
+}
 controls.stop.onclick = () => {
   player.pause();
   player.currentTime = 0;
+  playerWrapper.classList.remove('play');
+
 };
 controls.back.onclick = () => {
   if (--currIndex == -1)
@@ -31,7 +41,9 @@ controls.back.onclick = () => {
 
   title.title = tracks[currIndex];
   player.src = mp3Path(tracks[currIndex]);
-  player.play();
+
+  if(playerWrapper.classList.contains('play'))
+    player.play();
 };
 controls.next.onclick = () => {
   if (++currIndex == tracks.length)
@@ -39,5 +51,7 @@ controls.next.onclick = () => {
 
   title.title = tracks[currIndex];
   player.src = mp3Path(tracks[currIndex]);
-  player.play();
+  
+  if(playerWrapper.classList.contains('play'))
+    player.play();
 };
