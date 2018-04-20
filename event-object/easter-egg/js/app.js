@@ -16,15 +16,17 @@ function charToKeycode(code) {
 const nav = document.getElementsByTagName('nav')[0];
 const initialCode = 'нетология';
 const initialSequence = initialCode.split('').map(char => charToKeycode(char))
-let codeSequence = initialSequence;
+let codeSequence = initialSequence.slice();
 
 document.addEventListener('keyup', event => {
   if(event.ctrlKey && event.altKey && event.code === 'KeyT') {
     nav.classList.toggle('visible');
   }
 
-  if (!(codeSequence.splice(0, 1) == event.code)) {
-    codeSequence = initialSequence;
+  if (codeSequence[0] !== event.code) {
+    codeSequence = initialSequence.slice();
+  } else {
+    codeSequence = codeSequence.splice(1);
   }
 
   if (!codeSequence.length) {  
