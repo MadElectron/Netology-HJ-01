@@ -11,6 +11,10 @@ function toggleMenu(event) {
 }
 
 function openLink(event) {
+  // === My code ===
+  event.preventDefault();
+  event.stopPropagation();
+  // ===============
   console.log(this.textContent);
 }
 
