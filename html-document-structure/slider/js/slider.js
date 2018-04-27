@@ -1,8 +1,13 @@
 const slides = document.querySelectorAll('.slider li.slide');
 const buttons = document.querySelectorAll('.slider-nav > a');
+let actions = {};
+
+Array.from(buttons).forEach(btn => {
+  actions[btn.dataset.action] = btn;
+});
 
 slides[0].classList.add('slide-current');
-checkDisability(slides[0]);
+setDisability();
 
 Array.from(buttons).forEach(btn => {
   btn.addEventListener('click', event => {
@@ -27,19 +32,14 @@ Array.from(buttons).forEach(btn => {
           break;
       }
 
-      checkDisability();
+      setDisability();
     }
   });
 });
 
 
-function checkDisability(current) {
-  let actions = {};
+function setDisability() {
   current = document.querySelector('.slide.slide-current');
-
-  Array.from(buttons).forEach(btn => {
-    actions[btn.dataset.action] = btn;
-  });
 
   if (current.previousElementSibling === null) {
     actions['first'].classList.add('disabled');
