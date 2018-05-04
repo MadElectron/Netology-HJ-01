@@ -1,21 +1,20 @@
 'use strict';
 
 function init() {
-  const buttons = document.querySelectorAll('a.add-to-cart');
+  const itemsList =  document.querySelector('.items-list');
 
-  [...buttons].forEach(btn => {
-    btn.addEventListener('click', event => {
+  itemsList.addEventListener('click', event => {
+    if (event.target.classList.contains('add-to-cart')) {
       event.preventDefault();
-      
+
       const item = {};
-      item.title = btn.dataset.title;
-      item.price = btn.dataset.price;
+      item.title = event.target.dataset.title;
+      item.price = event.target.dataset.price;
 
       addToCart(item);
-    })
+    }
   });
 }
 
 init();
 
-showMore.addEventListener('click', init);
