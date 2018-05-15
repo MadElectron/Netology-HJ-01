@@ -69,9 +69,6 @@ class Cross extends Shape {
 }
 
 
-init();
-
-
 function init() {
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
@@ -102,11 +99,6 @@ function repaint() {
   });
 }
 
-// console.log(shapes)
-// console.log(shapes[0].nextPoint(10,10,1));
-repaint();
-
-
 function rand(min, max, float = false) {
   const result = Math.random() * (max - min) + min;
   return float ? result : Math.floor(result);
@@ -118,5 +110,7 @@ function nextPoint(x, y, time) {
     y: y + Math.sin((45 + x + (time / 10)) / 100) * 4
   };
 }
+
+init();
 
 timerId = setInterval(repaint, 50);
