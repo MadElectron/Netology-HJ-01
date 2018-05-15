@@ -51,20 +51,33 @@ class Circle extends Shape {
 }
 
 class Cross extends Shape {
-  constructor(x, y, size, nextPoint, speed) {
+  constructor(x, y, size, nextPoint, speed, angle) {
     super(x, y, size, nextPoint);
     this.side = 20 * this.size;
     this.speed = speed;
-
-    // @TODO: Angle!
+    this.angle = angle;
   }
+
   draw(ctx) {
     ctx.strokeStyle = '#fff';
-    ctx.moveTo(this.coords.x, this.coords.y);
+    // ctx.moveTo(this.coords.x, this.coords.y);
     ctx.beginPath();
-    ctx.arc(this.coords.x, this.coords.y, this.side, 0, 2 * Math.PI);
+    ctx.moveTo(this.coords.x, this.coords.y - this.side / 2);
+    ctx.lineTo(this.coords.x, this.coords.y + this.side / 2);
+    // ctx.moveTo(this.coords.x + this.side/2 * Math.cos(this.angle * Math.PI /180), this.coords.y - this.side /2+ this.side * Math.cos(this.angle * Math.PI /180) / 2 );
+    // ctx.lineTo(this.coords.x - this.side/2 * Math.cos(this.angle * Math.PI /180), this.coords.y + this.side/2 - this.side * Math.cos(this.angle * Math.PI /180)/ 2);
+    // ctx.lineTo(this.coords.x, this.coords.y);
+    ctx.moveTo(this.coords.x - this.side / 2, this.coords.y);
+    ctx.lineTo(this.coords.x + this.side / 2, this.coords.y);    
+    // ctx.lineTo(this.coords.x - this.side / 2 + this.side/2*Math.sin(30 * Math.PI /180), this.coords.y + this.side/2*Math.sin(30 * Math.PI /180));
+    // ctx.lineTo(this.coords.x + this.side / 2 - this.side/2*Math.sin(30 * Math.PI /180), this.coords.y - this.side/2*Math.sin(30 * Math.PI /180));
+    // ctx.lineTo(this.coords.x, this.coords.y);
+    // ctx.arc(this.coords.x, this.coords.y, this.side, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.stroke()
+  }
+  rotate(){
+
   }
 }
 
@@ -85,7 +98,8 @@ function init() {
       rand(0, canvas.height),
       rand(0.1, 0.6, true),
       timeFunctions[Math.round(Math.random(0.5))],
-      rand(-0.2, 0.2, true)  
+      rand(-0.2, 0.2, true),
+      30 // rand(0, 360)  
     ));
   }
 }
