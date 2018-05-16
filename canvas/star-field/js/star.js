@@ -12,6 +12,11 @@ function rand(min, max, float = false) {
 function draw() {
   const starCount = rand(200, 400);
 
+  // Setting canvas attributes
+  const style = window.getComputedStyle(canvas);
+  canvas.width = parseInt(style.getPropertyValue('width'));
+  canvas.height = parseInt(style.getPropertyValue('height'));
+
   ctx.fillStyle = '#000000';
   ctx.rect(0, 0, canvas.width, canvas.height);
   ctx.fill();
