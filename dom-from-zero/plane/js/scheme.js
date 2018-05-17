@@ -12,6 +12,17 @@ const totalHalf = document.getElementById('totalHalf');
 const totalAdult = document.getElementById('totalAdult');
 
 let data;
+const totals = {
+  all: 0,
+  half: 0,
+  adult: 0
+}
+
+function assignTotals() {
+  totalPax.textContent = totals.all;
+  totalHalf.textContent = totals.half;
+  totalAdult.textContent = totals.adult; 
+}
 
 function init() {
   const url = `https://neto-api.herokuapp.com/plane/${plane.value}`;
@@ -30,9 +41,7 @@ function init() {
       btnSetFull.disabled = 'disabled';
       btnSetEmpty.disabled = 'disabled';
 
-      totalPax.textContent = data.passengers;
-      totalAdult.textContent = 0;
-      totalHalf.textContent = 0;
+      assignTotals();
     });
 }
 
@@ -123,8 +132,33 @@ btnSeatMap.addEventListener('click', evt => {
   [...seats].forEach(seat => {
     seat.addEventListener('click', evt => {
       evt.preventDefault();
+
       const className = evt.altKey ? 'half' : 'adult';
-      evt.currentTarget.classList.add(className);
+      const hasClasses = ['half', 'adult'].some(c => {
+        return evt.currentTarget.classList.contains(c);
+      });
+
+      if (!hasClasses) {
+        totals.all++;
+        if (className === 'half') {
+          totals.half++;
+        } else {
+          totals.adult++;
+        }
+
+        evt.currentTarget.classList.add(className);
+      } else {
+        totals.all--;
+        if ( evt.currentTarget.classList.contains('half')) {
+          totals.half--;
+        } else {
+          totals.adult--;
+        }
+
+        evt.currentTarget.classList.remove('half', 'adult');
+      }
+
+      assignTotals();
     });
   });
 });
@@ -137,6 +171,11 @@ btnSetFull.addEventListener('click', evt => {
     seat.classList.remove('half');
     seat.classList.add('adult');
   });
+
+  totals.adult = data.passengers;
+  totals.all = data.passengers;
+  totals.half = 0;
+  assignTotals();
 });
 
 btnSetEmpty.addEventListener('click', evt => {
@@ -146,6 +185,11 @@ btnSetEmpty.addEventListener('click', evt => {
   [...seats].forEach(seat => {
     seat.classList.remove('adult', 'half');
   });
+
+  totals.adult = 0;
+  totals.all = 0;
+  totals.half = 0;
+  assignTotals();
 });
 
 
@@ -156,5 +200,3 @@ btnSetFull.disabled = 'disabled';
 btnSetEmpty.disabled = 'disabled';
 
 init();
-
-// @TODO: clear seat on click and change totals
